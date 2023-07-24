@@ -2,9 +2,6 @@
 - hosts: localhost
 
   tasks:
-  # -  name: key
-  #    apt_key: url=https://pkg.jenkins.io/debian-stable/jenkins.io.key state=present
-  #    become: yes
   -  name: Retrieve Jenkins GPG key
      get_url:
         url: "https://pkg.jenkins.io/debian/jenkins.io-2023.key"
@@ -26,8 +23,6 @@
      apt:
         update_cache: yes
      become: yes
-  # -  name: repo
-  #    apt_repository: repo='deb https://pkg.jenkins.io/debian-stable binary/' state=present
   -  name: install
      apt: name=jenkins 
      become: yes
