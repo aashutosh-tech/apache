@@ -1,21 +1,17 @@
 ---
 - name: Install Java, Python 3, and Jenkins
-  hosts: localhost
+  hosts: localhost  # Replace with the target host(s) where you want to install the software
   become: yes
 
   tasks:
-    - name: Update APT package cache
-      apt:
-        update_cache: yes
-
     - name: Install Java
       apt:
-        name: openjdk-11-jdk
+        name: openjdk-11-jdk  # Adjust the package name for the Java version you want to install
         state: present
 
-    - name: Install Python 3 and pip
+    - name: Install Python 3
       apt:
-        name: python3 python3-pip
+        name: python3
         state: present
 
     - name: Install Jenkins repository key
@@ -23,9 +19,9 @@
         url: https://pkg.jenkins.io/debian/jenkins.io.key
         state: present
 
-    - name: Add Jenkins APT repository
+    - name: Add Jenkins repository
       apt_repository:
-        repo: "deb http://pkg.jenkins.io/debian-stable binary/"
+        repo: deb https://pkg.jenkins.io/debian-stable binary/
         state: present
 
     - name: Install Jenkins
@@ -37,3 +33,4 @@
       service:
         name: jenkins
         state: started
+        enabled: yes
