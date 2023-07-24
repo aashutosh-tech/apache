@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+
+  tasks:
+  -  name: key
+     apt_key: url=https://pkg.jenkins.io/debian-stable/jenkins.io.key state=present
+     become: yes
+  -  name: repo
+     apt_repository: repo='deb https://pkg.jenkins.io/debian-stable binary/' state=present
+  -  name: inatall
+     apt: name=jenkins update_cache=yes
+     become: yes
+     
