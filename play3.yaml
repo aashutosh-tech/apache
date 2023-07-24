@@ -2,11 +2,24 @@
 - hosts: localhost
 
   tasks:
-  -  name: key
-     apt_key: url=https://pkg.jenkins.io/debian-stable/jenkins.io.key state=present
-     become: yes
-  -  name: repo
-     apt_repository: repo='deb https://pkg.jenkins.io/debian-stable binary/' state=present
+  # -  name: key
+  #    apt_key: url=https://pkg.jenkins.io/debian-stable/jenkins.io.key state=present
+  #    become: yes
+  -  name: Retrieve Jenkins GPG key
+      get_url:
+        url: "https://pkg.jenkins.io/debian/jenkins.io-2023.key"
+        dest: "/tmp/jenkins.io-2023.key"
+        mode: "0644"
+  -  name: Add Jenkins Debian Repository
+      lineinfile:
+        path: /etc/apt/sources.list.d/jenkins.list
+        line: "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian binary/"
+        create: yes
+        owner: root
+        group: root
+        mode: "0644"
+  # -  name: repo
+  #    apt_repository: repo='deb https://pkg.jenkins.io/debian-stable binary/' state=present
   -  name: inatall
      apt: name=jenkins update_cache=yes
      become: yes
