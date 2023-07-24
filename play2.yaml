@@ -18,9 +18,12 @@
         repo: "deb http://pkg.jenkins.io/debian-stable binary/"
         state: present
 
-    - name: Install Jenkins
+    - name: Update APT package cache
       apt:
         update_cache: yes
+
+    - name: Install Jenkins
+      apt:
         name: jenkins
         state: present
 
