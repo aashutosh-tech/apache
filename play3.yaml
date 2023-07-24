@@ -22,7 +22,7 @@
         owner: root
         group: root
         mode: "0644"
-   - name: Update apt cache (for Debian-based systems)
+  -  name: Update apt cache (for Debian-based systems)
      apt:
         update_cache: yes
      become: yes
