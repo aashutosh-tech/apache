@@ -22,9 +22,13 @@
         owner: root
         group: root
         mode: "0644"
+   - name: Update apt cache (for Debian-based systems)
+     apt:
+        update_cache: yes
+     become: yes
   # -  name: repo
   #    apt_repository: repo='deb https://pkg.jenkins.io/debian-stable binary/' state=present
-  -  name: inatall
-     apt: name=jenkins update_cache=yes
+  -  name: install
+     apt: name=jenkins 
      become: yes
      
