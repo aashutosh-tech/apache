@@ -1,0 +1,59 @@
+---
+- hosts: ec2_instances
+  become: yes
+
+  tasks:
+    - name: Update apt cache (for Debian-based systems)
+      apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Install Java (OpenJDK 11)
+      apt:
+        name: openjdk-11-jdk
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Install Java (OpenJDK 11) (for Red Hat-based systems)
+      yum:
+        name: java-11-openjdk-devel
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Add Jenkins Debian Repository Key
+      apt_key:
+        url: "https://pkg.jenkins.io/debian/jenkins.io.key"
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Add Jenkins Debian Repository
+      apt_repository:
+        repo: "deb https://pkg.jenkins.io/debian-stable binary/"
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Update apt cache (for Debian-based systems)
+      apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+
+    - name: Install Jenkins
+      apt:
+        name: jenkins
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Start Jenkins service (for Debian-based systems)
+      systemd:
+        name: jenkins
+        state: started
+        enabled: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Start Jenkins service (for Red Hat-based systems)
+      service:
+        name: jenkins
+        state: started
+        enabled: yes
+      when: ansible_os_family == "RedHat"
