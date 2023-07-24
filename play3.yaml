@@ -6,12 +6,12 @@
   #    apt_key: url=https://pkg.jenkins.io/debian-stable/jenkins.io.key state=present
   #    become: yes
   -  name: Retrieve Jenkins GPG key
-      get_url:
+     get_url:
         url: "https://pkg.jenkins.io/debian/jenkins.io-2023.key"
         dest: "/tmp/jenkins.io-2023.key"
         mode: "0644"
   -  name: Add Jenkins Debian Repository
-      lineinfile:
+     lineinfile:
         path: /etc/apt/sources.list.d/jenkins.list
         line: "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian binary/"
         create: yes
