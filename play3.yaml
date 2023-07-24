@@ -10,6 +10,10 @@
         url: "https://pkg.jenkins.io/debian/jenkins.io-2023.key"
         dest: "/tmp/jenkins.io-2023.key"
         mode: "0644"
+  -  name: Import Jenkins GPG key
+     apt_key:
+        data: "{{ lookup('file', '/tmp/jenkins.io-2023.key') }}"
+        state: present
   -  name: Add Jenkins Debian Repository
      lineinfile:
         path: /etc/apt/sources.list.d/jenkins.list
