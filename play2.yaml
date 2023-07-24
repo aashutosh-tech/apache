@@ -15,7 +15,7 @@
 
     - name: Add Jenkins APT repository
       apt_repository:
-        repo: "deb http://pkg.jenkins.io/debian-stable binary/"
+        repo: "deb https://pkg.jenkins.io/debian-stable binary/"
         state: present
 
     - name: Update APT package cache
